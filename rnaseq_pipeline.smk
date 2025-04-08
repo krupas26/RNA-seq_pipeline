@@ -13,6 +13,7 @@ chrom_sizes = config['chrom_sizes_path']
 adapter = config['adapter_file_path']
 fastq_dir = config.get('fastq_dir', os.path.join(filepath, 'data/fastq'))
 refGenome_dir = config['refGenome_dir_path']
+gtf_dir = config['gtf_dir_path']
 
 #either parse sample column from metadata or use the provided sample list directly
 sample_column = config.get('sample_column', None)
@@ -250,7 +251,7 @@ rule combine_bam:
 rule counts:
 	input:
 		bam_files = f"{filepath}/{run_id}_bam_files.txt",
-		gtf_file = "/project/eagen/referencegenomes/GRCh38+ERCC/GRCh38v29+ERCC.gtf"
+		gtf_file = f"{gtf_dir}/GRCh38v29+ERCC.gtf"
 	output:
 		counts = f"{filepath}/{run_id}_counts.txt",
 		counts_summary = f"{filepath}/{run_id}_counts.txt.summary"
