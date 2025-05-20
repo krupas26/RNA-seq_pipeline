@@ -5,7 +5,7 @@ This repository contains an RNA-seq data processing pipeline implemented using [
 ## Prerequisites
 Before running the pipeline, ensure that you have the following installed:
   - Conda or Miniconda
-  - Snakemake
+  - Snakemake v8.14.0
 
 ## Getting started
 ### 1. Clone the repository
@@ -45,6 +45,24 @@ Before running the pipeline, ensure that you have the following installed:
   ```bash
   snakemake -s rnaseq_pipeline.smk --configfile <config.yml> --cores <number-of-cores>
   ```
+##### To submit jobs on cluster as sbatch jobs
+  Create a generic profile_config.yml
+  ```yaml
+    executor: "cluster-generic"
+    cluster-generic-submit-cmd: "sbatch --output=logs/{rule}_{wildcards}_%j.out --error=logs/{rule}_{wildcards}_%j.err --mem={resources.mem_mb}"
+    jobname: "{wildcards}_{rule}_{jobid}"
+    default-resources: [mem_mb=4000, time='02:00:00', threads=1]
+    use-conda: true
+    jobs: 100
+    rerun-incomplete: true
+    latency-wait: 60
+  ```
+  Then run the pipeline with Snakemake as:
+  ```bash
+  snakemake -s rnaseq_pipeline.smk --profile <profile_config.yml> --configfile <config.yml> --cores <number-of-cores>
+  ```
+
+
 
 
      
