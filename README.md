@@ -1,6 +1,6 @@
 # RNA-seq pipeline
 
-This repository contains an RNA-seq data processing pipeline implemented using [Snakemake](https://snakemake.readthedocs.io/en/stable/index.html). The pipeline automates the essential steps of an RNA-seq analysis, including Quality control ([FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [FastQ Screen](https://www.bioinformatics.babraham.ac.uk/projects/fastq_screen/), [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic), Alignment ([STAR](https://github.com/alexdobin/STAR)), Quantification ([FeatureCount](https://subread.sourceforge.net/featureCounts.html)), and BedGraph generation.
+This repository contains a reproducibile RNA-seq data processing pipeline implemented using [Snakemake](https://snakemake.readthedocs.io/en/stable/index.html). The pipeline automates the essential steps of an RNA-seq analysis, including Quality control ([FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [FastQ Screen](https://www.bioinformatics.babraham.ac.uk/projects/fastq_screen/), [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic), Alignment ([STAR](https://github.com/alexdobin/STAR)), Quantification ([FeatureCount](https://subread.sourceforge.net/featureCounts.html)), and BedGraph generation.
 
 ## Prerequisites
 Before running the pipeline, ensure that you have the following installed:
