@@ -264,7 +264,7 @@ rule counts:
 	shell:
 		"""
 		#xargs -a {input.bam_files} -I {{}} featureCounts -p --countReadPairs -T 32 -a {input.gtf_file} -o {output.counts} {{}}
-		featureCounts -p --countReadPairs -T 32 -a {input.gtf_file} -o {output.counts} $(cat {input.bam_files})
+		featureCounts -p --countReadPairs -s 2 -T 32 -a {input.gtf_file} -o {output.counts} $(cat {input.bam_files})
 		"""
 
 #Combine all reports using MultiQC
