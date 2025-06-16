@@ -81,7 +81,7 @@ rule fastqc:
 	resources:
 		threads=8,
 		time="12:00:00",
-		mem_mb=10000
+		mem_mb=2000
 	shell:
 		"""
 		fastqc {input.fq1} {input.fq2} -o {params.dir}
@@ -101,7 +101,7 @@ rule fastq_screen:
 	resources:
 		threads=32,
 		time="12:00:00",
-		mem_mb=100000
+		mem_mb=10000
 	shell:
 		"""
 		fastq_screen --aligner bwa --outdir {params.outdir} {input.fq1} {input.fq2} --force --threads {resources.threads}
@@ -124,7 +124,7 @@ rule trimmomatic:
 		"rnaseq"
 	resources:
 		threads=32,
-		mem_mb=50000,
+		mem_mb=5000,
 		time="24:00:00"
 	shell:
 		"""
@@ -148,7 +148,7 @@ rule re_fastqc:
 	resources:
 		threads=8,
 		time="12:00:00",
-		mem_mb=10000
+		mem_mb=2000
 	shell:
 		"""
 		fastqc {input.trimmed_fq1} {input.trimmed_fq2} -o {params.dir}
@@ -168,7 +168,7 @@ rule star:
 		"rnaseq"
 	resources:
 		threads=32,
-		mem_mb=70000,
+		mem_mb=50000,
 		time="24:00:00"
 	shell:
 		"""
@@ -190,7 +190,7 @@ rule mark_duplicates:
 	resources:
 		threads=16,
 		time="12:00:00",
-		mem_mb=160000
+		mem_mb=10000
 	shell:
 		"""
 		picard MarkDuplicates I={input.bam_files} O={output.marked_dup_bam} M={output.metrics} \
@@ -209,7 +209,7 @@ rule flagstats:
 	resources:
 		threads=8,
 		time="12:00:00",
-		mem_mb=10000
+		mem_mb=2000
 	shell:
 		"""
 		samtools flagstat {input.bam_files} > {output.bam_stats}
@@ -226,7 +226,7 @@ rule index_bam:
 	resources:
 		threads=8,
 		time="12:00:00",
-		mem_mb=10000
+		mem_mb=2000
 	shell:
 		"""
 		samtools index {input.bam_files} {output.sorted_indexed_bam}
@@ -260,7 +260,7 @@ rule counts:
 	resources:
 		threads=8,
 		time="12:00:00",
-		mem_mb=10000
+		mem_mb=5000
 	shell:
 		"""
 		#xargs -a {input.bam_files} -I {{}} featureCounts -p --countReadPairs -T 32 -a {input.gtf_file} -o {output.counts} {{}}
@@ -296,7 +296,8 @@ rule multiqc:
 	conda: 'rnaseq'
 	resources: 
 		threads=8,
-		time="1:00:00"
+		time="1:00:00",
+		mem_mb=2000
 	localrule: True
 	shell:
 		"""
@@ -317,7 +318,7 @@ rule bedgraph:
 	resources:
 		threads=8,
 		time="12:00:00",
-		mem_mb=10000
+		mem_mb=2000
 	shell:
 		"""
 		STAR --runMode inputAlignmentsFromBAM --inputBAMfile {input.bam_file} \
@@ -358,7 +359,7 @@ rule tracks:
 	resources:
 		threads=8,
 		time="12:00:00",
-		mem_mb=10000
+		mem_mb=2000
 	shell:
 		"""
 		bedGraphToBigWig {input.bg1_sorted} {params.chrom_sizes} {output.bw_str1}
